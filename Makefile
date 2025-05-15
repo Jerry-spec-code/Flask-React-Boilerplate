@@ -1,4 +1,10 @@
-PYTHON3_EXE := python3
+ifeq ($(OS),Windows_NT)
+	PYTHON3_EXE := python
+	ACTIVATE_VENV := . venv/Scripts/activate
+else
+	PYTHON3_EXE := python3
+	ACTIVATE_VENV := . venv/bin/activate
+endif
 
 install_frontend::
 	(cd ./client && npm install)
@@ -12,11 +18,11 @@ frontend::
 install_backend::
 	(cd ./server \
 	&& $(PYTHON3_EXE) -m venv venv \
-	&& . venv/bin/activate \
+	&& $(ACTIVATE_VENV) \
 	&& $(PYTHON3_EXE) -m pip install --no-deps --no-cache-dir -r requirements.txt)
 
 run_backend::
-	(cd ./server && $(PYTHON3_EXE) app.py)
+	(cd ./server && $(ACTIVATE_VENV) && $(PYTHON3_EXE) app.py)
 
 backend::
 	$(MAKE) install_backend && $(MAKE) run_backend
