@@ -13,7 +13,7 @@ start_frontend::
 	(cd ./client && npm start)
 
 frontend::
-	$(MAKE) install_frontend && $(MAKE) start_frontend
+	make install_frontend && make start_frontend
 
 install_backend::
 	(cd ./server \
@@ -25,4 +25,4 @@ run_backend::
 	(cd ./server && $(ACTIVATE_VENV) && $(PYTHON3_EXE) app.py)
 
 backend::
-	$(MAKE) install_backend && $(MAKE) run_backend
+	make install_backend && make run_backend
